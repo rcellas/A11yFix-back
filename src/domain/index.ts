@@ -13,6 +13,7 @@ export * from './pattern/pattern-type';
 export * from './pattern/pattern-context';
 export * from './pattern/accessibility-pattern.interface';
 export * from './pattern/pattern-registry';
+export * from './pattern/patterns/dialog.pattern';
 export * from './remediation/remediation-id';
 export * from './remediation/remediation-status';
 export * from './verification/verification-status';
