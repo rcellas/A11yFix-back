@@ -3,6 +3,7 @@ export * from './common/entity-id';
 export * from './audit/audit-id';
 export * from './audit/target-url';
 export * from './audit/audit-status';
+export * from './audit/page';
 export * from './finding/finding-id';
 export * from './finding/severity';
 export * from './finding/element-selector';
