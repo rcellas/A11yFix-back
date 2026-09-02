@@ -59,3 +59,20 @@ export class ApprovalRequiredError extends DomainError {
     super(`Remediation "${remediationId}" must be approved before application.`);
   }
 }
+
+export class PatternNotSupportedError extends DomainError {
+  public readonly code = 'PATTERN_NOT_SUPPORTED';
+
+  constructor(patternType: string) {
+    super(`Accessibility pattern "${patternType}" is not registered or supported.`);
+  }
+}
+
+export class PatternAlreadyRegisteredError extends DomainError {
+  public readonly code = 'PATTERN_ALREADY_REGISTERED';
+
+  constructor(patternType: string) {
+    super(`Accessibility pattern "${patternType}" is already registered.`);
+  }
+}
+
