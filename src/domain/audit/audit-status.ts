@@ -68,6 +68,22 @@ export class AuditStatus {
     return this._value === other._value;
   }
 
+  public isCreated(): boolean {
+    return this._value === 'created';
+  }
+
+  public isRunning(): boolean {
+    return this._value === 'running';
+  }
+
+  public isCompleted(): boolean {
+    return this._value === 'completed';
+  }
+
+  public isFailed(): boolean {
+    return this._value === 'failed';
+  }
+
   public isTerminal(): boolean {
     return this._value === 'completed' || this._value === 'failed';
   }

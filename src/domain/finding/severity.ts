@@ -42,6 +42,22 @@ export class Severity {
     return this._value;
   }
 
+  public isCritical(): boolean {
+    return this._value === 'critical';
+  }
+
+  public isSerious(): boolean {
+    return this._value === 'serious';
+  }
+
+  public isModerate(): boolean {
+    return this._value === 'moderate';
+  }
+
+  public isMinor(): boolean {
+    return this._value === 'minor';
+  }
+
   public equals(other?: Severity | null): boolean {
     if (!other) return false;
     return this._value === other._value;
