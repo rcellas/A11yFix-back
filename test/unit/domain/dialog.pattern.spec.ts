@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { DialogPattern } from '../../../../src/domain/pattern/patterns/dialog.pattern';
-import { Finding } from '../../../../src/domain/finding/finding';
-import { AuditId } from '../../../../src/domain/audit/audit-id';
-import { Severity } from '../../../../src/domain/finding/severity';
-import { ElementSelector } from '../../../../src/domain/finding/element-selector';
-import { PatternType } from '../../../../src/domain/pattern/pattern-type';
+import { DialogPattern } from '../../../src/domain/pattern/dialog.pattern';
+import { Finding } from '../../../src/domain/finding/finding';
+import { AuditId } from '../../../src/domain/audit/audit-id';
+import { Severity } from '../../../src/domain/finding/severity';
+import { ElementSelector } from '../../../src/domain/finding/element-selector';
+import { PatternType } from '../../../src/domain/pattern/pattern-type';
 
 describe('DialogPattern (P-01 Plugin)', () => {
   let pattern: DialogPattern;

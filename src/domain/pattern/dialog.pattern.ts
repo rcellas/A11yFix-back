@@ -1,5 +1,5 @@
-import { PatternType } from '../pattern-type';
-import { AccessibilityPattern } from '../accessibility-pattern.interface';
+import { PatternType } from './pattern-type';
+import { AccessibilityPattern } from './accessibility-pattern.interface';
 import {
   PatternContext,
   DetectionResult,
@@ -9,11 +9,11 @@ import {
   VerificationResult,
   VerificationContext,
   VerificationCheck,
-} from '../pattern-context';
-import { Severity } from '../../finding/severity';
-import { ElementSelector } from '../../finding/element-selector';
-import { Finding } from '../../finding/finding';
-import { VerificationStatus } from '../../verification/verification-status';
+} from './pattern-context';
+import { Severity } from '../finding/severity';
+import { ElementSelector } from '../finding/element-selector';
+import { Finding } from '../finding/finding';
+import { VerificationStatus } from '../verification/verification-status';
 
 /**
  * P-01: WAI-ARIA Dialog (Modal / Non-Modal) Pattern Plugin.
