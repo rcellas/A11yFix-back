@@ -9,3 +9,4 @@ export * from './use-cases/create-audit.use-case';
 export * from './use-cases/get-audit.use-case';
 export * from './use-cases/get-findings.use-case';
 export * from './use-cases/get-finding.use-case';
+export * from './use-cases/inspect-pattern.use-case';
