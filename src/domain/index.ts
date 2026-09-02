@@ -8,6 +8,7 @@ export * from './audit/audit';
 export * from './finding/finding-id';
 export * from './finding/severity';
 export * from './finding/element-selector';
+export * from './finding/finding';
 export * from './pattern/pattern-type';
 export * from './remediation/remediation-id';
 export * from './remediation/remediation-status';
