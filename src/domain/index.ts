@@ -15,6 +15,7 @@ export * from './pattern/accessibility-pattern.interface';
 export * from './pattern/pattern-registry';
 export * from './pattern/dialog.pattern';
 export * from './pattern/tabs.pattern';
+export * from './pattern/disclosure.pattern';
 export * from './remediation/remediation-id';
 export * from './remediation/remediation-status';
 export * from './verification/verification-status';
