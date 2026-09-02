@@ -2,11 +2,11 @@ import { chromium, Browser, BrowserContext, Page } from 'playwright';
 import {
   BrowserInspectorPort,
   BrowserSession,
-  DomElementSnapshot,
   FocusSnapshot,
   KeyboardResult,
   KeyboardSequence,
 } from '../../application/ports/browser-inspector.port';
+import { DomElementSnapshot } from '../../domain/pattern/pattern-context';
 import { TargetUrl } from '../../domain/audit/target-url';
 
 interface SessionData {
