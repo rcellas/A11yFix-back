@@ -56,6 +56,17 @@ export class PatternViolationHttpDto {
   public helpUrl?: string;
 }
 
+export class PatternDescriptorHttpDto {
+  @ApiProperty({ type: String, example: 'DIALOG' })
+  public type!: string;
+
+  @ApiProperty({ type: String, example: 'Dialog (Modal focus trap)' })
+  public name!: string;
+
+  @ApiProperty({ type: String, example: 'https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/' })
+  public specUrl!: string;
+}
+
 export class PatternInspectionResponseHttpDto {
   @ApiProperty({ type: String, example: 'DIALOG' })
   public patternType!: string;
