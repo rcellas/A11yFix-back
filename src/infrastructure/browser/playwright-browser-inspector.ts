@@ -27,7 +27,12 @@ export class PlaywrightBrowserInspector implements BrowserInspectorPort {
     if (!this.browser) {
       this.browser = await chromium.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage',
+          '--disable-gpu',
+        ],
       });
     }
     return this.browser;
