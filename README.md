@@ -17,7 +17,7 @@ A11yFix is structured as a modern two-tier, agent-native architecture:
 
 | Component | Repository | Description |
 | :--- | :--- | :--- |
-| 🖥️ **Frontend (WebMCP Client)** | [**`A11yFix-Front`**](https://github.com/rcellas/A11yFix-Front) | Angular 19 visual QA workspace exposing **8 WebMCP tools** on `document.modelContext`. |
+| 🖥️ **Frontend (WebMCP Client)** | [**`A11yFix-Front`**](https://github.com/rcellas/A11yFix-Front) | Angular 22 visual QA workspace exposing **8 WebMCP tools** on `document.modelContext`. |
 | ⚙️ **Backend (API & Engine)** | [**`A11yFix-back`**](https://github.com/rcellas/A11yFix-back) *(This repo)* | Hexagonal REST API, Playwright browser automation, `axe-core`, WAI-ARIA APG engine & test generator. |
 
 ---
