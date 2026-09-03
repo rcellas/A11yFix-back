@@ -12,6 +12,7 @@ import {
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { CreateAuditUseCase } from '../../../application/use-cases/create-audit.use-case';
 import { GetAuditUseCase } from '../../../application/use-cases/get-audit.use-case';
+import { ListAuditsUseCase } from '../../../application/use-cases/list-audits.use-case';
 import { GetFindingsUseCase } from '../../../application/use-cases/get-findings.use-case';
 import { CreateAuditHttpDto } from '../dto/create-audit.http-dto';
 import { AuditResponseHttpDto } from '../dto/audit-response.http-dto';
@@ -25,9 +26,18 @@ export class AuditsController {
     private readonly createAuditUseCase: CreateAuditUseCase,
     @Inject(GetAuditUseCase)
     private readonly getAuditUseCase: GetAuditUseCase,
+    @Inject(ListAuditsUseCase)
+    private readonly listAuditsUseCase: ListAuditsUseCase,
     @Inject(GetFindingsUseCase)
     private readonly getFindingsUseCase: GetFindingsUseCase,
   ) {}
+
+  @Get()
+  @ApiOperation({ summary: 'List recent accessibility audits' })
+  @ApiResponse({ status: 200, description: 'Audits list', type: [AuditResponseHttpDto] })
+  public async list(): Promise<AuditResponseHttpDto[]> {
+    return this.listAuditsUseCase.execute();
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)

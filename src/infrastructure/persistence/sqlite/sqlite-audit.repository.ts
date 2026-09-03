@@ -51,7 +51,13 @@ export class SqliteAuditRepository implements AuditRepositoryPort {
     this.findByIdStmt = this.db.prepare(`
       SELECT * FROM audits WHERE id = ?
     `);
+
+    this.findAllStmt = this.db.prepare(`
+      SELECT * FROM audits ORDER BY created_at DESC LIMIT ?
+    `);
   }
+
+  private readonly findAllStmt: Database.Statement;
 
   public async save(audit: Audit): Promise<void> {
     const raw = audit.toJSON();
@@ -78,6 +84,15 @@ export class SqliteAuditRepository implements AuditRepositoryPort {
       return null;
     }
 
+    return this.mapRowToAudit(row);
+  }
+
+  public async findAll(limit = 50): Promise<Audit[]> {
+    const rows = this.findAllStmt.all(limit) as AuditRow[];
+    return rows.map((row) => this.mapRowToAudit(row));
+  }
+
+  private mapRowToAudit(row: AuditRow): Audit {
     return Audit.reconstitute({
       id: row.id,
       url: row.url,

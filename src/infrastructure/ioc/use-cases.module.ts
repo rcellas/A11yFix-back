@@ -1,6 +1,7 @@
 import { Module, Global } from '@nestjs/common';
 import { CreateAuditUseCase } from '../../application/use-cases/create-audit.use-case';
 import { GetAuditUseCase } from '../../application/use-cases/get-audit.use-case';
+import { ListAuditsUseCase } from '../../application/use-cases/list-audits.use-case';
 import { GetFindingsUseCase } from '../../application/use-cases/get-findings.use-case';
 import { GetFindingUseCase } from '../../application/use-cases/get-finding.use-case';
 import { InspectPatternUseCase } from '../../application/use-cases/inspect-pattern.use-case';
@@ -37,6 +38,13 @@ import { PATTERN_REGISTRY_TOKEN } from './engine.module';
       provide: GetAuditUseCase,
       useFactory: (auditRepo: AuditRepositoryPort): GetAuditUseCase => {
         return new GetAuditUseCase(auditRepo);
+      },
+      inject: [AUDIT_REPOSITORY_PORT],
+    },
+    {
+      provide: ListAuditsUseCase,
+      useFactory: (auditRepo: AuditRepositoryPort): ListAuditsUseCase => {
+        return new ListAuditsUseCase(auditRepo);
       },
       inject: [AUDIT_REPOSITORY_PORT],
     },
@@ -97,6 +105,7 @@ import { PATTERN_REGISTRY_TOKEN } from './engine.module';
   exports: [
     CreateAuditUseCase,
     GetAuditUseCase,
+    ListAuditsUseCase,
     GetFindingsUseCase,
     GetFindingUseCase,
     InspectPatternUseCase,

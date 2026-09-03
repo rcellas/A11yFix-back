@@ -11,6 +11,7 @@ describe('GetAuditUseCase', () => {
     const mockRepo: AuditRepositoryPort = {
       save: vi.fn(),
       findById: vi.fn().mockResolvedValue(audit),
+      findAll: vi.fn(),
     };
 
     const useCase = new GetAuditUseCase(mockRepo);
@@ -26,6 +27,7 @@ describe('GetAuditUseCase', () => {
     const mockRepo: AuditRepositoryPort = {
       save: vi.fn(),
       findById: vi.fn().mockResolvedValue(null),
+      findAll: vi.fn(),
     };
 
     const useCase = new GetAuditUseCase(mockRepo);

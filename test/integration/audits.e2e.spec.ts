@@ -86,4 +86,21 @@ describe('Audits HTTP API (E2E)', () => {
     expect(Array.isArray(findingsRes.body)).toBe(true);
     expect(findingsRes.body).toHaveLength(0);
   });
+
+  it('GET /audits should return list of audits', async () => {
+    await request(app.getHttpServer())
+      .post('/audits')
+      .send({ url: 'https://example.com/page1' })
+      .expect(201);
+
+    await request(app.getHttpServer())
+      .post('/audits')
+      .send({ url: 'https://example.com/page2' })
+      .expect(201);
+
+    const res = await request(app.getHttpServer()).get('/audits').expect(200);
+
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThanOrEqual(2);
+  });
 });

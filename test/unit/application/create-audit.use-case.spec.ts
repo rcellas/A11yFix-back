@@ -12,6 +12,7 @@ describe('CreateAuditUseCase', () => {
         savedAudits.push(audit);
       }),
       findById: vi.fn(),
+      findAll: vi.fn(),
     };
 
     const useCase = new CreateAuditUseCase(mockRepo);
@@ -30,6 +31,7 @@ describe('CreateAuditUseCase', () => {
     const mockRepo: AuditRepositoryPort = {
       save: vi.fn(),
       findById: vi.fn(),
+      findAll: vi.fn(),
     };
 
     const useCase = new CreateAuditUseCase(mockRepo);
