@@ -8,11 +8,12 @@ RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt
 
 # Enable Corepack and activate PNPM
 RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN pnpm config set enable-pre-post-scripts true
 
-COPY package.json pnpm-lock.yaml tsconfig.json tsconfig.build.json ./
+COPY package.json pnpm-lock.yaml* tsconfig.json tsconfig.build.json ./
 
-# Install dependencies with approved native build scripts
-RUN pnpm install --frozen-lockfile
+# Install dependencies
+RUN pnpm install
 
 # Copy source code
 COPY src/ ./src/
