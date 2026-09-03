@@ -2,33 +2,34 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { ElementSelectorHttpDto } from './finding-response.http-dto';
 
 export class DomElementSnapshotHttpDto {
-  @ApiProperty({ example: 'div' })
+  @ApiProperty({ type: String, example: 'div' })
   public tagName!: string;
 
-  @ApiProperty({ example: { role: 'dialog', 'aria-modal': 'true', id: 'my-dialog' } })
+  @ApiProperty({ type: Object, example: { role: 'dialog', 'aria-modal': 'true', id: 'my-dialog' } })
   public attributes!: Record<string, string>;
 
-  @ApiPropertyOptional({ example: 'dialog' })
+  @ApiPropertyOptional({ type: String, example: 'dialog' })
   public role?: string;
 
-  @ApiPropertyOptional({ example: 'Confirmation Dialog' })
+  @ApiPropertyOptional({ type: String, example: 'Confirmation Dialog' })
   public accessibleName?: string;
 
-  @ApiProperty({ example: '<div role="dialog" id="my-dialog"></div>' })
+  @ApiProperty({ type: String, example: '<div role="dialog" id="my-dialog"></div>' })
   public outerHtml!: string;
 
-  @ApiPropertyOptional({ example: 'Dialog Content' })
+  @ApiPropertyOptional({ type: String, example: 'Dialog Content' })
   public textContent?: string;
 
-  @ApiPropertyOptional({ type: [DomElementSnapshotHttpDto] })
+  @ApiPropertyOptional({ type: () => [DomElementSnapshotHttpDto] })
   public children?: DomElementSnapshotHttpDto[];
 }
 
 export class InspectPatternHttpDto {
-  @ApiProperty({ type: DomElementSnapshotHttpDto })
+  @ApiProperty({ type: () => DomElementSnapshotHttpDto })
   public targetElement!: DomElementSnapshotHttpDto;
 
   @ApiPropertyOptional({
+    type: String,
     example: 'DIALOG',
     description: 'Optional pattern type to target (DIALOG, TABS, DISCLOSURE, COMBOBOX). If omitted, all matching patterns are evaluated.',
   })
@@ -36,35 +37,35 @@ export class InspectPatternHttpDto {
 }
 
 export class PatternViolationHttpDto {
-  @ApiProperty({ example: 'pattern:dialog-accessible-name' })
+  @ApiProperty({ type: String, example: 'pattern:dialog-accessible-name' })
   public ruleId!: string;
 
-  @ApiProperty({ example: 'Dialog must have an accessible name via aria-labelledby or aria-label.' })
+  @ApiProperty({ type: String, example: 'Dialog must have an accessible name via aria-labelledby or aria-label.' })
   public message!: string;
 
-  @ApiProperty({ example: 'serious' })
+  @ApiProperty({ type: String, example: 'serious' })
   public severity!: string;
 
-  @ApiProperty({ type: ElementSelectorHttpDto })
+  @ApiProperty({ type: () => ElementSelectorHttpDto })
   public targetSelector!: ElementSelectorHttpDto;
 
-  @ApiProperty({ example: '<div role="dialog"></div>' })
+  @ApiProperty({ type: String, example: '<div role="dialog"></div>' })
   public htmlSnippet!: string;
 
-  @ApiPropertyOptional({ example: 'https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/' })
+  @ApiPropertyOptional({ type: String, example: 'https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/' })
   public helpUrl?: string;
 }
 
 export class PatternInspectionResponseHttpDto {
-  @ApiProperty({ example: 'DIALOG' })
+  @ApiProperty({ type: String, example: 'DIALOG' })
   public patternType!: string;
 
-  @ApiProperty({ example: false })
+  @ApiProperty({ type: Boolean, example: false })
   public passed!: boolean;
 
-  @ApiProperty({ type: [PatternViolationHttpDto] })
+  @ApiProperty({ type: () => [PatternViolationHttpDto] })
   public violations!: PatternViolationHttpDto[];
 
-  @ApiProperty({ example: '2026-09-03T01:00:00.000Z' })
+  @ApiProperty({ type: String, example: '2026-09-03T01:00:00.000Z' })
   public inspectedAt!: string;
 }
