@@ -2,13 +2,16 @@ FROM mcr.microsoft.com/playwright:v1.50.0-noble
 
 WORKDIR /app
 
+# Install native build tools (make, g++, python3) required to compile better-sqlite3
+RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+
 # Enable Corepack and activate PNPM 9
 RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
-# Copy project manifest and configuration
+# Copy project configuration
 COPY .npmrc package.json tsconfig.json tsconfig.build.json ./
 
-# Install dependencies and compile better-sqlite3 directly in target environment
+# Install dependencies and compile better-sqlite3 with make/g++
 RUN pnpm install
 
 # Copy application source
