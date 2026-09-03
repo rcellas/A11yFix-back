@@ -4,6 +4,7 @@ import { AuditsController } from '../controllers/audits.controller';
 import { FindingsController } from '../controllers/findings.controller';
 import { PatternsController } from '../controllers/patterns.controller';
 import { RemediationsController } from '../controllers/remediations.controller';
+import { VerificationController } from '../controllers/verification.controller';
 import { PersistenceModule } from '../../ioc/persistence.module';
 import { EngineModule } from '../../ioc/engine.module';
 import { UseCasesModule } from '../../ioc/use-cases.module';
@@ -16,6 +17,7 @@ import { UseCasesModule } from '../../ioc/use-cases.module';
     FindingsController,
     PatternsController,
     RemediationsController,
+    VerificationController,
   ],
   providers: [],
 })

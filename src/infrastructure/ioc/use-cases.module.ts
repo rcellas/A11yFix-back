@@ -9,6 +9,8 @@ import { ProposeRemediationUseCase } from '../../application/use-cases/propose-r
 import { ApproveRemediationUseCase } from '../../application/use-cases/approve-remediation.use-case';
 import { ApplyRemediationUseCase } from '../../application/use-cases/apply-remediation.use-case';
 import { GetRemediationsUseCase } from '../../application/use-cases/get-remediations.use-case';
+import { VerifyRemediationUseCase } from '../../application/use-cases/verify-remediation.use-case';
+import { GenerateRegressionTestUseCase } from '../../application/use-cases/generate-regression-test.use-case';
 import {
   AUDIT_REPOSITORY_PORT,
   AuditRepositoryPort,
@@ -127,6 +129,26 @@ import { PATTERN_REGISTRY_TOKEN } from './engine.module';
       },
       inject: [REMEDIATION_REPOSITORY_PORT],
     },
+    {
+      provide: VerifyRemediationUseCase,
+      useFactory: (
+        findingRepo: FindingRepositoryPort,
+        patternRegistry: PatternRegistry,
+      ): VerifyRemediationUseCase => {
+        return new VerifyRemediationUseCase(findingRepo, patternRegistry);
+      },
+      inject: [FINDING_REPOSITORY_PORT, PATTERN_REGISTRY_TOKEN],
+    },
+    {
+      provide: GenerateRegressionTestUseCase,
+      useFactory: (
+        findingRepo: FindingRepositoryPort,
+        auditRepo: AuditRepositoryPort,
+      ): GenerateRegressionTestUseCase => {
+        return new GenerateRegressionTestUseCase(findingRepo, auditRepo);
+      },
+      inject: [FINDING_REPOSITORY_PORT, AUDIT_REPOSITORY_PORT],
+    },
   ],
   exports: [
     CreateAuditUseCase,
@@ -139,6 +161,8 @@ import { PATTERN_REGISTRY_TOKEN } from './engine.module';
     ApproveRemediationUseCase,
     ApplyRemediationUseCase,
     GetRemediationsUseCase,
+    VerifyRemediationUseCase,
+    GenerateRegressionTestUseCase,
   ],
 })
 export class UseCasesModule {}
