@@ -6,7 +6,6 @@ import { AppModule } from '../../src/infrastructure/http/modules/app.module';
 import { ProblemDetailsFilter } from '../../src/infrastructure/http/filters/problem-details.filter';
 import { FINDING_REPOSITORY_PORT, FindingRepositoryPort } from '../../src/application/ports/finding-repository.port';
 import { Finding } from '../../src/domain/finding/finding';
-import { AuditId } from '../../src/domain/audit/audit-id';
 import { Severity } from '../../src/domain/finding/severity';
 import { ElementSelector } from '../../src/domain/finding/element-selector';
 import { AUDIT_REPOSITORY_PORT, AuditRepositoryPort } from '../../src/application/ports/audit-repository.port';
