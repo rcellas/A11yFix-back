@@ -60,7 +60,25 @@ function initSchema(db: Database.Database): void {
       FOREIGN KEY (audit_id) REFERENCES audits(id) ON DELETE CASCADE
     );
 
+    CREATE TABLE IF NOT EXISTS remediations (
+      id TEXT PRIMARY KEY,
+      finding_id TEXT NOT NULL,
+      status TEXT NOT NULL,
+      proposal_title TEXT NOT NULL,
+      proposal_description TEXT NOT NULL,
+      proposal_diff TEXT,
+      proposal_attributes TEXT,
+      created_at TEXT NOT NULL,
+      approved_at TEXT,
+      applied_at TEXT,
+      rejected_at TEXT,
+      rejection_reason TEXT,
+      FOREIGN KEY (finding_id) REFERENCES findings(id) ON DELETE CASCADE
+    );
+
     CREATE INDEX IF NOT EXISTS idx_findings_audit_id ON findings(audit_id);
     CREATE INDEX IF NOT EXISTS idx_audits_status ON audits(status);
+    CREATE INDEX IF NOT EXISTS idx_remediations_finding_id ON remediations(finding_id);
+    CREATE INDEX IF NOT EXISTS idx_remediations_status ON remediations(status);
   `);
 }
