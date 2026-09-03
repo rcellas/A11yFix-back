@@ -7,6 +7,7 @@ import {
   NotFoundException,
   HttpCode,
   HttpStatus,
+  Inject,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { CreateAuditUseCase } from '../../../application/use-cases/create-audit.use-case';
@@ -20,8 +21,11 @@ import { FindingResponseHttpDto } from '../dto/finding-response.http-dto';
 @Controller('audits')
 export class AuditsController {
   constructor(
+    @Inject(CreateAuditUseCase)
     private readonly createAuditUseCase: CreateAuditUseCase,
+    @Inject(GetAuditUseCase)
     private readonly getAuditUseCase: GetAuditUseCase,
+    @Inject(GetFindingsUseCase)
     private readonly getFindingsUseCase: GetFindingsUseCase,
   ) {}
 
@@ -31,7 +35,8 @@ export class AuditsController {
   @ApiResponse({ status: 201, description: 'Audit initiated successfully', type: AuditResponseHttpDto })
   @ApiResponse({ status: 400, description: 'Invalid target URL format' })
   public async create(@Body() body: CreateAuditHttpDto): Promise<AuditResponseHttpDto> {
-    return this.createAuditUseCase.execute({ url: body.url });
+    const rawUrl = body?.url ?? (body as unknown as { targetUrl?: string })?.targetUrl;
+    return this.createAuditUseCase.execute({ url: rawUrl });
   }
 
   @Get(':id')

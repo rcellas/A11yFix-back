@@ -1,4 +1,4 @@
-import { Controller, Get, Param, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Param, NotFoundException, Inject } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { GetFindingUseCase } from '../../../application/use-cases/get-finding.use-case';
 import { FindingResponseHttpDto } from '../dto/finding-response.http-dto';
@@ -6,7 +6,10 @@ import { FindingResponseHttpDto } from '../dto/finding-response.http-dto';
 @ApiTags('Findings')
 @Controller('findings')
 export class FindingsController {
-  constructor(private readonly getFindingUseCase: GetFindingUseCase) {}
+  constructor(
+    @Inject(GetFindingUseCase)
+    private readonly getFindingUseCase: GetFindingUseCase,
+  ) {}
 
   @Get(':id')
   @ApiOperation({ summary: 'Get a specific finding by id' })

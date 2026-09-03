@@ -1,4 +1,12 @@
-import { Controller, Post, Get, Param, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Param,
+  HttpCode,
+  HttpStatus,
+  Inject,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { ProposeRemediationUseCase } from '../../../application/use-cases/propose-remediation.use-case';
 import { ApproveRemediationUseCase } from '../../../application/use-cases/approve-remediation.use-case';
@@ -10,9 +18,13 @@ import { RemediationResponseHttpDto } from '../dto/remediation.http-dto';
 @Controller()
 export class RemediationsController {
   constructor(
+    @Inject(ProposeRemediationUseCase)
     private readonly proposeRemediationUseCase: ProposeRemediationUseCase,
+    @Inject(ApproveRemediationUseCase)
     private readonly approveRemediationUseCase: ApproveRemediationUseCase,
+    @Inject(ApplyRemediationUseCase)
     private readonly applyRemediationUseCase: ApplyRemediationUseCase,
+    @Inject(GetRemediationsUseCase)
     private readonly getRemediationsUseCase: GetRemediationsUseCase,
   ) {}
 

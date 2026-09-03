@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Inject } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { InspectPatternUseCase } from '../../../application/use-cases/inspect-pattern.use-case';
 import {
@@ -9,7 +9,10 @@ import {
 @ApiTags('Patterns')
 @Controller('patterns')
 export class PatternsController {
-  constructor(private readonly inspectPatternUseCase: InspectPatternUseCase) {}
+  constructor(
+    @Inject(InspectPatternUseCase)
+    private readonly inspectPatternUseCase: InspectPatternUseCase,
+  ) {}
 
   @Post('inspect')
   @HttpCode(HttpStatus.OK)
