@@ -1,11 +1,19 @@
-import Database from 'better-sqlite3';
+import DatabaseConstructor, { Database as DatabaseInstance } from 'better-sqlite3';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+
+function getDatabaseConstructor(): typeof DatabaseConstructor {
+  if (typeof DatabaseConstructor === 'function') {
+    return DatabaseConstructor;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (DatabaseConstructor as any)?.default || DatabaseConstructor;
+}
 
 /**
  * Creates and initializes a SQLite database connection with idempotent schema migration.
  */
-export function createSqliteDatabase(dbPath = ':memory:'): Database.Database {
+export function createSqliteDatabase(dbPath = ':memory:'): DatabaseInstance {
   if (dbPath !== ':memory:') {
     const dir = path.dirname(dbPath);
     if (!fs.existsSync(dir)) {
@@ -13,7 +21,8 @@ export function createSqliteDatabase(dbPath = ':memory:'): Database.Database {
     }
   }
 
-  const db = new Database(dbPath);
+  const DBClass = getDatabaseConstructor();
+  const db = new DBClass(dbPath);
 
   // Enable WAL mode for high concurrency and foreign keys for integrity
   if (dbPath !== ':memory:') {
@@ -26,7 +35,7 @@ export function createSqliteDatabase(dbPath = ':memory:'): Database.Database {
   return db;
 }
 
-function initSchema(db: Database.Database): void {
+function initSchema(db: DatabaseInstance): void {
   db.exec(`
     CREATE TABLE IF NOT EXISTS audits (
       id TEXT PRIMARY KEY,
