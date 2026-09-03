@@ -1,6 +1,16 @@
 import { InvalidPatternTypeError } from '../errors/domain.error';
 
-export const PATTERN_TYPES = ['DIALOG', 'TABS', 'DISCLOSURE', 'COMBOBOX'] as const;
+export const PATTERN_TYPES = [
+  'DIALOG',
+  'TABS',
+  'DISCLOSURE',
+  'COMBOBOX',
+  'MENU_BUTTON',
+  'BREADCRUMB',
+  'TOOLTIP',
+  'ALERT_DIALOG',
+  'ACCORDION',
+] as const;
 
 export type PatternTypeValue = (typeof PATTERN_TYPES)[number];
 
@@ -36,6 +46,26 @@ export class PatternType {
 
   public static combobox(): PatternType {
     return new PatternType('COMBOBOX');
+  }
+
+  public static menuButton(): PatternType {
+    return new PatternType('MENU_BUTTON');
+  }
+
+  public static breadcrumb(): PatternType {
+    return new PatternType('BREADCRUMB');
+  }
+
+  public static tooltip(): PatternType {
+    return new PatternType('TOOLTIP');
+  }
+
+  public static alertDialog(): PatternType {
+    return new PatternType('ALERT_DIALOG');
+  }
+
+  public static accordion(): PatternType {
+    return new PatternType('ACCORDION');
   }
 
   public get value(): PatternTypeValue {

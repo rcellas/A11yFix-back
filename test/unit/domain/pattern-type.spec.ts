@@ -23,8 +23,8 @@ describe('PatternType Value Object', () => {
   });
 
   it('should throw InvalidPatternTypeError on unsupported pattern types', () => {
-    expect(() => PatternType.create('ACCORDION')).toThrow(InvalidPatternTypeError);
-    expect(() => PatternType.create('SLIDER')).toThrow(InvalidPatternTypeError);
+    expect(() => PatternType.create('CAROUSEL')).toThrow(InvalidPatternTypeError);
+    expect(() => PatternType.create('UNKNOWN_PATTERN')).toThrow(InvalidPatternTypeError);
     expect(() => PatternType.create('')).toThrow(InvalidPatternTypeError);
   });
 

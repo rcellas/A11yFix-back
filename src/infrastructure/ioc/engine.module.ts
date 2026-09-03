@@ -8,6 +8,11 @@ import { DialogPattern } from '../../domain/pattern/dialog.pattern';
 import { TabsPattern } from '../../domain/pattern/tabs.pattern';
 import { DisclosurePattern } from '../../domain/pattern/disclosure.pattern';
 import { ComboboxPattern } from '../../domain/pattern/combobox.pattern';
+import { MenuButtonPattern } from '../../domain/pattern/menu-button.pattern';
+import { BreadcrumbPattern } from '../../domain/pattern/breadcrumb.pattern';
+import { TooltipPattern } from '../../domain/pattern/tooltip.pattern';
+import { AlertDialogPattern } from '../../domain/pattern/alert-dialog.pattern';
+import { AccordionPattern } from '../../domain/pattern/accordion.pattern';
 
 export const PATTERN_REGISTRY_TOKEN = Symbol('PATTERN_REGISTRY_TOKEN');
 
@@ -35,6 +40,11 @@ export const PATTERN_REGISTRY_TOKEN = Symbol('PATTERN_REGISTRY_TOKEN');
         registry.register(new TabsPattern());
         registry.register(new DisclosurePattern());
         registry.register(new ComboboxPattern());
+        registry.register(new MenuButtonPattern());
+        registry.register(new BreadcrumbPattern());
+        registry.register(new TooltipPattern());
+        registry.register(new AlertDialogPattern());
+        registry.register(new AccordionPattern());
         return registry;
       },
     },
