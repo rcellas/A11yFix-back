@@ -75,8 +75,24 @@ export class RemediationStatus {
     return next;
   }
 
+  public isProposed(): boolean {
+    return this._value === 'proposed';
+  }
+
   public isApproved(): boolean {
     return this._value === 'approved' || this._value === 'applied' || this._value === 'verified';
+  }
+
+  public isApplied(): boolean {
+    return this._value === 'applied';
+  }
+
+  public isVerified(): boolean {
+    return this._value === 'verified';
+  }
+
+  public isRejected(): boolean {
+    return this._value === 'rejected';
   }
 
   public equals(other?: RemediationStatus | null): boolean {

@@ -19,4 +19,5 @@ export * from './pattern/disclosure.pattern';
 export * from './pattern/combobox.pattern';
 export * from './remediation/remediation-id';
 export * from './remediation/remediation-status';
+export * from './remediation/remediation';
 export * from './verification/verification-status';
