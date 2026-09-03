@@ -38,25 +38,35 @@ export class ProblemDetailsFilter implements ExceptionFilter {
     let detail = 'An unexpected error occurred processing your request.';
     let type = 'https://httpstatuses.com/500';
 
-    if (exception instanceof EntityNotFoundError) {
+    if (
+      exception instanceof EntityNotFoundError ||
+      (exception as Error)?.name === 'EntityNotFoundError'
+    ) {
       status = HttpStatus.NOT_FOUND;
       title = 'Resource Not Found';
-      detail = exception.message;
+      detail = (exception as Error).message;
       type = 'https://httpstatuses.com/404';
     } else if (
       exception instanceof InvalidUrlError ||
       exception instanceof InvalidStateTransitionError ||
-      exception instanceof DomainError
+      exception instanceof DomainError ||
+      (exception as Error)?.name === 'InvalidUrlError' ||
+      (exception as Error)?.name === 'InvalidStateTransitionError' ||
+      (exception as Error)?.name === 'DomainError'
     ) {
       status = HttpStatus.BAD_REQUEST;
       title = 'Bad Request';
-      detail = exception.message;
+      detail = (exception as Error).message;
       type = 'https://httpstatuses.com/400';
-    } else if (exception instanceof HttpException) {
-      status = exception.getStatus();
-      const res = exception.getResponse();
-      title = exception.name;
-      detail = typeof res === 'string' ? res : (res as { message?: string }).message || exception.message;
+    } else if (
+      exception instanceof HttpException ||
+      typeof (exception as Record<string, unknown>)?.getStatus === 'function'
+    ) {
+      const httpEx = exception as HttpException;
+      status = httpEx.getStatus();
+      const res = httpEx.getResponse();
+      title = httpEx.name;
+      detail = typeof res === 'string' ? res : (res as { message?: string }).message || httpEx.message;
       type = `https://httpstatuses.com/${status}`;
     } else if (exception instanceof Error) {
       this.logger.error(`Unhandled error: ${exception.message}`, exception.stack);

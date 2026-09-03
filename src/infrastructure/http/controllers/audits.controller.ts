@@ -1,0 +1,57 @@
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  Param,
+  NotFoundException,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import { CreateAuditUseCase } from '../../../application/use-cases/create-audit.use-case';
+import { GetAuditUseCase } from '../../../application/use-cases/get-audit.use-case';
+import { GetFindingsUseCase } from '../../../application/use-cases/get-findings.use-case';
+import { CreateAuditHttpDto } from '../dto/create-audit.http-dto';
+import { AuditResponseHttpDto } from '../dto/audit-response.http-dto';
+import { FindingResponseHttpDto } from '../dto/finding-response.http-dto';
+
+@ApiTags('Audits')
+@Controller('audits')
+export class AuditsController {
+  constructor(
+    private readonly createAuditUseCase: CreateAuditUseCase,
+    private readonly getAuditUseCase: GetAuditUseCase,
+    private readonly getFindingsUseCase: GetFindingsUseCase,
+  ) {}
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a new accessibility audit' })
+  @ApiResponse({ status: 201, description: 'Audit initiated successfully', type: AuditResponseHttpDto })
+  @ApiResponse({ status: 400, description: 'Invalid target URL format' })
+  public async create(@Body() body: CreateAuditHttpDto): Promise<AuditResponseHttpDto> {
+    return this.createAuditUseCase.execute({ url: body.url });
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get audit status and details by id' })
+  @ApiParam({ name: 'id', description: 'Audit UUID' })
+  @ApiResponse({ status: 200, description: 'Audit retrieved', type: AuditResponseHttpDto })
+  @ApiResponse({ status: 404, description: 'Audit not found' })
+  public async getById(@Param('id') id: string): Promise<AuditResponseHttpDto> {
+    const audit = await this.getAuditUseCase.execute({ id });
+    if (!audit) {
+      throw new NotFoundException(`Audit with id "${id}" not found.`);
+    }
+    return audit;
+  }
+
+  @Get(':id/findings')
+  @ApiOperation({ summary: 'Get all accessibility findings for an audit' })
+  @ApiParam({ name: 'id', description: 'Audit UUID' })
+  @ApiResponse({ status: 200, description: 'Findings list', type: [FindingResponseHttpDto] })
+  public async getFindings(@Param('id') id: string): Promise<FindingResponseHttpDto[]> {
+    return this.getFindingsUseCase.execute({ auditId: id });
+  }
+}

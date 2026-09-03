@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './infrastructure/http/modules/app.module';
+import { ProblemDetailsFilter } from './infrastructure/http/filters/problem-details.filter';
 import { loadEnvConfig } from './config/env.config';
 
 async function bootstrap(): Promise<void> {
@@ -13,6 +14,8 @@ async function bootstrap(): Promise<void> {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
+
+  app.useGlobalFilters(new ProblemDetailsFilter());
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('A11yFix API')

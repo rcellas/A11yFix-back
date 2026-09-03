@@ -20,6 +20,14 @@ export class InvalidUuidError extends DomainError {
   }
 }
 
+export class EntityNotFoundError extends DomainError {
+  public readonly code = 'ENTITY_NOT_FOUND';
+
+  constructor(entityName: string, id: string) {
+    super(`${entityName} with id "${id}" was not found.`);
+  }
+}
+
 export class InvalidUrlError extends DomainError {
   public readonly code = 'INVALID_URL';
 

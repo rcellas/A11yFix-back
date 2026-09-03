@@ -17,3 +17,5 @@ export function loadEnvConfig(env: NodeJS.ProcessEnv = process.env): EnvConfig {
   }
   return result.data;
 }
+
+export const envConfig = loadEnvConfig();
