@@ -76,8 +76,8 @@ export class CreateAuditUseCase {
           });
 
           for (const detection of patternDetections) {
-            const auditResult = detection.pattern.audit({
-              targetElement: detection.matchedElement,
+            const auditResult = detection.pattern.inspect({
+              targetElement: detection.result.matchedElement,
               url: targetUrl.value,
             });
 
