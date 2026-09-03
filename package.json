@@ -47,5 +47,13 @@
     "unplugin-swc": "^1.5.1",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.7"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@scarf/scarf",
+      "@swc/core",
+      "better-sqlite3",
+      "esbuild"
+    ]
   }
 }
