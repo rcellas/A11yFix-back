@@ -1,9 +1,11 @@
 services:
   - type: web
     name: a11yfix-api
-    runtime: docker
-    plan: starter
+    runtime: node
+    plan: free
     region: frankfurt
+    buildCommand: pnpm install && pnpm playwright install chromium && pnpm build
+    startCommand: pnpm start
     envVars:
       - key: NODE_ENV
         value: production

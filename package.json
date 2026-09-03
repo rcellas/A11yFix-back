@@ -4,6 +4,9 @@
   "description": "Agent-native accessibility QA platform backend",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/main.js",
