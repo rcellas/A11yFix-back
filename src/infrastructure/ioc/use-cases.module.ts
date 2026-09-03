@@ -21,6 +21,14 @@ import {
   REMEDIATION_REPOSITORY_PORT,
   RemediationRepositoryPort,
 } from '../../application/ports/remediation-repository.port';
+import {
+  BROWSER_INSPECTOR_PORT,
+  BrowserInspectorPort,
+} from '../../application/ports/browser-inspector.port';
+import {
+  ACCESSIBILITY_SCANNER_PORT,
+  AccessibilityScannerPort,
+} from '../../application/ports/accessibility-scanner.port';
 import { PatternRegistry } from '../../domain/pattern/pattern-registry';
 import { PATTERN_REGISTRY_TOKEN } from './engine.module';
 
@@ -29,10 +37,28 @@ import { PATTERN_REGISTRY_TOKEN } from './engine.module';
   providers: [
     {
       provide: CreateAuditUseCase,
-      useFactory: (auditRepo: AuditRepositoryPort): CreateAuditUseCase => {
-        return new CreateAuditUseCase(auditRepo);
+      useFactory: (
+        auditRepo: AuditRepositoryPort,
+        findingRepo: FindingRepositoryPort,
+        browserInspector: BrowserInspectorPort,
+        accessibilityScanner: AccessibilityScannerPort,
+        patternRegistry: PatternRegistry,
+      ): CreateAuditUseCase => {
+        return new CreateAuditUseCase(
+          auditRepo,
+          findingRepo,
+          browserInspector,
+          accessibilityScanner,
+          patternRegistry,
+        );
       },
-      inject: [AUDIT_REPOSITORY_PORT],
+      inject: [
+        AUDIT_REPOSITORY_PORT,
+        FINDING_REPOSITORY_PORT,
+        BROWSER_INSPECTOR_PORT,
+        ACCESSIBILITY_SCANNER_PORT,
+        PATTERN_REGISTRY_TOKEN,
+      ],
     },
     {
       provide: GetAuditUseCase,
