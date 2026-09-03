@@ -2,29 +2,33 @@ FROM mcr.microsoft.com/playwright:v1.50.0-noble
 
 WORKDIR /app
 
-# Install native build tools (make, g++, python3) required to compile better-sqlite3
-RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
+# Install native build tools required to compile better-sqlite3 C++ bindings
+RUN apt-get update && \
+    apt-get install -y python3 make g++ && \
+    rm -rf /var/lib/apt/lists/*
 
 # Enable Corepack and activate PNPM 9
-RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
+RUN corepack enable && \
+    corepack prepare pnpm@9.15.4 --activate
 
-# Copy project configuration
-COPY .npmrc package.json tsconfig.json tsconfig.build.json ./
+# Copy manifests and lockfile first (for Docker layer caching)
+COPY package.json pnpm-lock.yaml .npmrc ./
 
-# Install dependencies and compile better-sqlite3 with make/g++
-RUN pnpm install
+# Install exact dependency versions from lockfile
+RUN pnpm install --frozen-lockfile
 
-# Copy application source
-COPY src/ ./src/
+# Copy TypeScript configuration and source
+COPY tsconfig.json tsconfig.build.json ./
+COPY src ./src
 
 # Compile TypeScript to dist/
 RUN pnpm build
 
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV DATABASE_PATH=data/a11yfix.sqlite
+ENV DATABASE_PATH=/app/data/a11yfix.sqlite
 
-RUN mkdir -p data
+RUN mkdir -p /app/data
 
 EXPOSE 3000
 
