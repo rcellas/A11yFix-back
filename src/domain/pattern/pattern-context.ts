@@ -64,8 +64,8 @@ export interface PatternAudit {
 export interface FixProposal {
   title: string;
   description: string;
-  suggestedDiff: string;
-  suggestedAttributes: Record<string, string>;
+  suggestedDiff?: string;
+  suggestedAttributes?: Record<string, string>;
 }
 
 /**

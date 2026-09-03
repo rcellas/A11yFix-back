@@ -4,6 +4,10 @@ import { GetAuditUseCase } from '../../application/use-cases/get-audit.use-case'
 import { GetFindingsUseCase } from '../../application/use-cases/get-findings.use-case';
 import { GetFindingUseCase } from '../../application/use-cases/get-finding.use-case';
 import { InspectPatternUseCase } from '../../application/use-cases/inspect-pattern.use-case';
+import { ProposeRemediationUseCase } from '../../application/use-cases/propose-remediation.use-case';
+import { ApproveRemediationUseCase } from '../../application/use-cases/approve-remediation.use-case';
+import { ApplyRemediationUseCase } from '../../application/use-cases/apply-remediation.use-case';
+import { GetRemediationsUseCase } from '../../application/use-cases/get-remediations.use-case';
 import {
   AUDIT_REPOSITORY_PORT,
   AuditRepositoryPort,
@@ -12,6 +16,10 @@ import {
   FINDING_REPOSITORY_PORT,
   FindingRepositoryPort,
 } from '../../application/ports/finding-repository.port';
+import {
+  REMEDIATION_REPOSITORY_PORT,
+  RemediationRepositoryPort,
+} from '../../application/ports/remediation-repository.port';
 import { PatternRegistry } from '../../domain/pattern/pattern-registry';
 import { PATTERN_REGISTRY_TOKEN } from './engine.module';
 
@@ -53,6 +61,38 @@ import { PATTERN_REGISTRY_TOKEN } from './engine.module';
       },
       inject: [PATTERN_REGISTRY_TOKEN],
     },
+    {
+      provide: ProposeRemediationUseCase,
+      useFactory: (
+        findingRepo: FindingRepositoryPort,
+        remediationRepo: RemediationRepositoryPort,
+        patternRegistry: PatternRegistry,
+      ): ProposeRemediationUseCase => {
+        return new ProposeRemediationUseCase(findingRepo, remediationRepo, patternRegistry);
+      },
+      inject: [FINDING_REPOSITORY_PORT, REMEDIATION_REPOSITORY_PORT, PATTERN_REGISTRY_TOKEN],
+    },
+    {
+      provide: ApproveRemediationUseCase,
+      useFactory: (remediationRepo: RemediationRepositoryPort): ApproveRemediationUseCase => {
+        return new ApproveRemediationUseCase(remediationRepo);
+      },
+      inject: [REMEDIATION_REPOSITORY_PORT],
+    },
+    {
+      provide: ApplyRemediationUseCase,
+      useFactory: (remediationRepo: RemediationRepositoryPort): ApplyRemediationUseCase => {
+        return new ApplyRemediationUseCase(remediationRepo);
+      },
+      inject: [REMEDIATION_REPOSITORY_PORT],
+    },
+    {
+      provide: GetRemediationsUseCase,
+      useFactory: (remediationRepo: RemediationRepositoryPort): GetRemediationsUseCase => {
+        return new GetRemediationsUseCase(remediationRepo);
+      },
+      inject: [REMEDIATION_REPOSITORY_PORT],
+    },
   ],
   exports: [
     CreateAuditUseCase,
@@ -60,6 +100,10 @@ import { PATTERN_REGISTRY_TOKEN } from './engine.module';
     GetFindingsUseCase,
     GetFindingUseCase,
     InspectPatternUseCase,
+    ProposeRemediationUseCase,
+    ApproveRemediationUseCase,
+    ApplyRemediationUseCase,
+    GetRemediationsUseCase,
   ],
 })
 export class UseCasesModule {}
