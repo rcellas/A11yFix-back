@@ -6,11 +6,10 @@ WORKDIR /app
 # Install native build tools for compiling better-sqlite3
 RUN apt-get update && apt-get install -y python3 make g++ && rm -rf /var/lib/apt/lists/*
 
-# Enable Corepack and activate PNPM
-RUN corepack enable && corepack prepare pnpm@latest --activate
-RUN pnpm config set enable-pre-post-scripts true
+# Enable Corepack and activate PNPM 9
+RUN corepack enable && corepack prepare pnpm@9.15.4 --activate
 
-COPY package.json pnpm-lock.yaml* tsconfig.json tsconfig.build.json ./
+COPY .npmrc package.json tsconfig.json tsconfig.build.json ./
 
 # Install dependencies
 RUN pnpm install
