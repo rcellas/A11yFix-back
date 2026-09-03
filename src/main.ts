@@ -32,8 +32,8 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document);
 
-  await app.listen(config.PORT);
-  console.log(`[A11yFix API] Running on http://localhost:${config.PORT}`);
+  await app.listen(config.PORT, '0.0.0.0');
+  console.log(`[A11yFix API] Running on http://0.0.0.0:${config.PORT}`);
   console.log(`[A11yFix API] Swagger docs available at http://localhost:${config.PORT}/api/docs`);
 }
 

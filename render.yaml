@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: a11yfix-api
+    runtime: docker
+    plan: starter
+    region: frankfurt
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        value: "*"
+      - key: DATABASE_PATH
+        value: data/a11yfix.sqlite
+      - key: MAX_AUDIT_TIMEOUT_MS
+        value: 60000
+    healthCheckPath: /health
