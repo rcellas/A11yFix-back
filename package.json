@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Agent-native accessibility QA platform backend",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/main.js",
